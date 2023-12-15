@@ -1,0 +1,179 @@
+LABELS
+#use this template to change the leaf labels, or define/change the internal node names
+#additionally, you can specify a custom class for internal nodes, which can be used to automatically collapse them
+#lines starting with a hash are comments and ignored during parsing
+
+#=================================================================#
+#                    MANDATORY SETTINGS                           #
+#=================================================================#
+#select the separator which is used to delimit the data below (TAB,SPACE or COMMA).This separator must be used throughout this file.
+
+SEPARATOR TAB
+#SEPARATOR SPACE
+#SEPARATOR COMMA
+
+#Internal tree nodes can be specified using IDs directly, or using the 'last common ancestor' method described in iTOL help pages
+#=================================================================#
+#       Actual data follows after the "DATA" keyword              #
+#=================================================================#
+DATA
+#NODE_ID,LABEL,CLASS
+
+#Examples
+
+#note that the class field is optional
+
+#define a name and class for an internal node. Class 'kingdom' will be available when using the automatic clade collapsing function
+#9031|9606,Metazoa,kingdom
+
+#change the label for leaf node 9606
+#9606,Homo sapiens	
+113_16	Flavobacteriales;f__Flavobacteriaceae;g__Dokdonia;s__
+115_25	Rhodothermales;f__;g__;s__
+115_42	Thalassobaculales;f__Thalassobaculaceae;g__Nisaea;s__
+116_15	Cytophagales;f__Cyclobacteriaceae;g__Reichenbachiella;s__
+116_18_sub	Rhodobacterales;f__Rhodobacteraceae;g__Roseobacter;s__
+116_20	Cytophagales;f__Cyclobacteriaceae;g__JAMZMI01;s__
+119_33	Sphingomonadales;f__Sphingomonadaceae;g__Parasphingorhabdus;s__
+119_87	Pseudomonadales;f__Oleiphilaceae;g__Marinobacter;s__Marinobacter sp913057975
+119_89	Enterobacterales_A;f__Alteromonadaceae;g__Paraglaciecola;s__
+120_31	Balneolales;f__Balneolaceae;g__Balneola;s__Balneola sp001650905
+124_1	Flavobacteriales;f__Flavobacteriaceae;g__Eudoraea;s__
+127_50	Parvibaculales;f__CGMCC-115125;g__Pyruvatibacter;s__
+12_70	Flavobacteriales;f__Flavobacteriaceae;g__Cellulophaga;s__Cellulophaga sp002813425
+130_20	Rhizobiales;f__Rhizobiaceae;g__Lentilitoribacter;s__
+134_58	Caulobacterales;f__Hyphomonadaceae;g__;s__
+137_49	Enterobacterales_A;f__Alteromonadaceae;g__Paraglaciecola;s__
+137_65	Flavobacteriales;f__Flavobacteriaceae;g__Nonlabens;s__
+137_maxbin.011	Cytophagales;f__Cyclobacteriaceae;g__Reichenbachiella;s__
+139_49	Flavobacteriales;f__Flavobacteriaceae;g__Muricauda;s__
+139_83_sub	Rhodobacterales;f__Rhodobacteraceae;g__Tateyamaria;s__
+140_35	Flavobacteriales;f__Flavobacteriaceae;g__Aurantibacter_A;s__
+140_8	Rhizobiales;f__Rhizobiaceae;g__Aurantimonas;s__Aurantimonas coralicida
+144_2	Rhodobacterales;f__Rhodobacteraceae;g__Sedimentitalea;s__
+145_38	Rhodobacterales;f__Rhodobacteraceae;g__Tateyamaria;s__
+146_5	Caulobacterales;f__Maricaulaceae;g__Litorimonas;s__
+157_1	Pseudomonadales;f__Marinomonadaceae;g__Marinomonas;s__
+159_43	Sphingomonadales;f__Sphingomonadaceae;g__Parasphingorhabdus;s__
+159_maxbin.009	Balneolales;f__Balneolaceae;g__Balneola;s__
+159_maxbin.012_sub	Enterobacterales_A;f__Vibrionaceae;g__Vibrio;s__Vibrio splendidus
+168_16	Cytophagales;f__Cyclobacteriaceae;g__JAMZMI01;s__
+168_30	Cytophagales;f__Cyclobacteriaceae;g__;s__
+171_15	Balneolales;f__Balneolaceae;g__Balneola;s__
+171_16	Rhizobiales;f__Rhizobiaceae;g__R2A130;s__
+171_25	Rhodobacterales;f__Rhodobacteraceae;g__JABSSA01;s__
+173_22	Cytophagales;f__Cyclobacteriaceae;g__Ekhidna;s__
+173_25	Cytophagales;f__Cyclobacteriaceae;g__Ekhidna;s__
+173_30	Flavobacteriales;f__Crocinitomicaceae;g__JABURP01;s__
+173_68	Cytophagales;f__Cyclobacteriaceae;g__ELB16-189;s__
+173_87	Cytophagales;f__Cyclobacteriaceae;g__Fulvivirga;s__
+174_50	Rhodobacterales;f__Rhodobacteraceae;g__Roseobacter;s__
+179_17_sub	Pseudomonadales;f__Marinomonadaceae;g__Marinomonas;s__
+179_54	Caulobacterales;f__Hyphomonadaceae;g__Henriciella;s__
+179_71	Flavobacteriales;f__Flavobacteriaceae;g__Maribacter;s__Maribacter dokdonensis
+184_51	Cytophagales;f__Cyclobacteriaceae;g__Algoriphagus;s__
+184_68	Rhodobacterales;f__Rhodobacteraceae;g__Shimia;s__
+199_15	Cytophagales;f__Cyclobacteriaceae;g__Reichenbachiella;s__
+199_30	Rhizobiales;f__Stappiaceae;g__Roseibium;s__
+199_75	Flavobacteriales;f__Flavobacteriaceae;g__Maribacter;s__
+19_16	Acidimicrobiales;f__Ilumatobacteraceae;g__Ilumatobacter_A;s__
+204_109	Enterobacterales_A;f__Kangiellaceae;g__GCA-002733465;s__
+204_45	Flavobacteriales;f__Flavobacteriaceae;g__Maribacter;s__
+204_85	Flavobacteriales;f__Flavobacteriaceae;g__Polaribacter;s__
+20_77	Sphingomonadales;f__Sphingomonadaceae;g__Alteripontixanthobacter;s__
+220_62	Flavobacteriales;f__Flavobacteriaceae;g__Maribacter;s__Maribacter litoralis
+223_maxbin.016_sub	Rhizobiales;f__Stappiaceae;g__Roseibium;s__
+234_29	Rhodobacterales;f__Rhodobacteraceae;g__Sulfitobacter;s__
+252_28	Rhizobiales;f__Stappiaceae;g__Roseibium;s__Roseibium album
+252_50	Cytophagales;f__Cyclobacteriaceae;g__Ekhidna;s__
+287_101	Enterobacterales_A;f__Alteromonadaceae;g__Paraglaciecola;s__
+287_25	Pseudomonadales;f__Halieaceae;g__;s__
+294_68	Rhodobacterales;f__Rhodobacteraceae;g__Pseudophaeobacter;s__Pseudophaeobacter sp001457775
+29_31_sub	Rhizobiales;f__JACESI01;g__JACESI01;s__
+302_24	Rhodobacterales;f__Rhodobacteraceae;g__Tateyamaria;s__Tateyamaria sp900143535
+31_9	Pseudomonadales;f__Halieaceae;g__Halioglobus;s__
+330_100	Rhodobacterales;f__Rhodobacteraceae;g__Aliishimia;s__
+330_38	Sphingomonadales;f__Sphingomonadaceae;g__Parasphingorhabdus;s__
+330_8	Verrucomicrobiales;f__Akkermansiaceae;g__Luteolibacter;s__
+330_97_sub	Caulobacterales;f__Maricaulaceae;g__Maricaulis;s__
+36_14	Rhizobiales;f__Stappiaceae;g__Roseibium;s__Roseibium polysiphoniae
+36_87	Rhodobacterales;f__Rhodobacteraceae;g__JABDJX01;s__
+371_14	Pseudomonadales;f__Oleiphilaceae;g__Marinobacter;s__
+371_43	Rhodobacterales;f__Rhodobacteraceae;g__Pseudophaeobacter;s__Pseudophaeobacter sp900313025
+374_11	Sneathiellales;f__Sneathiellaceae;g__Sneathiella;s__
+374_45	Flavobacteriales;f__Flavobacteriaceae;g__Algibacter_B;s__
+374_94	Caulobacterales;f__Maricaulaceae;g__Litorimonas;s__
+374_maxbin.003	Caulobacterales;f__Maricaulaceae;g__Hellea;s__
+37_44	Pseudomonadales;f__Oleiphilaceae;g__Marinobacter;s__
+38_81	Pirellulales;f__Pirellulaceae;g__Rhodopirellula;s__Rhodopirellula bahusiensis
+395_29	Rhodobacterales;f__Rhodobacteraceae;g__Ascidiaceihabitans;s__
+39_51	Pseudomonadales;f__Porticoccaceae;g__Porticoccus;s__Porticoccus sp002341315
+40_108	Rhizobiales;f__Aestuariivirgaceae;g__Anderseniella;s__
+411_50	Rhizobiales;f__Stappiaceae;g__;s__
+41_25	Pseudomonadales;f__Alcanivoracaceae;g__Alcanivorax;s__Alcanivorax venustensis
+41_6	Rhodobacterales;f__Rhodobacteraceae;g__JABSSA01;s__
+41_94_sub	Rhodobacterales;f__Rhodobacteraceae;g__Sulfitobacter;s__Sulfitobacter dubius
+421_15	Sphingomonadales;f__Sphingomonadaceae;g__Erythrobacter;s__Erythrobacter sp900149685
+421_19	Rhizobiales;f__HXMU1428-3;g__HXMU1428-3;s__HXMU1428-3 sp021604645
+421_65_sub	Rhizobiales;f__Rhizobiaceae;g__Hoeflea;s__
+421_maxbin.001	Planctomycetales;f__Planctomycetaceae;g__Fuerstiella;s__
+422_8	Rhizobiales;f__GCA-2746425;g__GCA-2746425;s__
+422_maxbin.014	Flavobacteriales;f__Flavobacteriaceae;g__Gilvibacter;s__
+424_12	Rhodobacterales;f__Rhodobacteraceae;g__Litoreibacter;s__
+424_88	Rhizobiales;f__Rhizobiaceae;g__Lentilitoribacter;s__Lentilitoribacter sp020628775
+424_maxbin.012	Rhizobiales;f__Rhizobiaceae;g__Nitratireductor_D;s__
+427_31	Flavobacteriales;f__Flavobacteriaceae;g__Maribacter_C;s__
+427_5	Parvibaculales;f__Parvibaculaceae;g__Parvibaculum;s__
+427_63	Pseudomonadales;f__Oleiphilaceae;g__Marinobacter;s__Marinobacter alexandrii
+427_84	Pseudomonadales;f__Marinomonadaceae;g__Marinomonas;s__
+43_20_sub	Rhizobiales;f__JACESI01;g__JACESI01;s__
+43_54	Rhodobacterales;f__Rhodobacteraceae;g__Yoonia;s__Yoonia sp025141675
+43_maxbin.008	Sphingomonadales;f__Sphingomonadaceae;g__Qipengyuania;s__Qipengyuania citrea
+444_62	Rhizobiales;f__Rhizobiaceae;g__Lentilitoribacter;s__
+448_36	Rhodobacterales;f__Rhodobacteraceae;g__Pseudoruegeria;s__
+450_131	Rhodobacterales;f__Rhodobacteraceae;g__Sulfitobacter;s__
+459_34	Rhodobacterales;f__Rhodobacteraceae;g__Sulfitobacter;s__Sulfitobacter sp001634775
+462_24	Rhodobacterales;f__Rhodobacteraceae;g__Pseudophaeobacter;s__
+463_53	Rhizobiales;f__Stappiaceae;g__Roseibium;s__
+472_47_sub	Pseudomonadales;f__Halieaceae;g__Halioglobus;s__
+479_102	Cytophagales;f__Cyclobacteriaceae;g__;s__
+479_113	Sphingomonadales;f__Sphingomonadaceae;g__Erythrobacter;s__
+47_54	Rhizobiales;f__Rhizobiaceae;g__R2A130;s__
+47_62	Rhodobacterales;f__Rhodobacteraceae;g__Sulfitobacter;s__
+481_35	Sphingomonadales;f__Sphingomonadaceae;g__Erythrobacter;s__
+481_46	Flavobacteriales;f__Flavobacteriaceae;g__Algibacter;s__
+486_111	Cytophagales;f__Cyclobacteriaceae;g__Ekhidna;s__
+48_65	Sphingomonadales;f__Sphingomonadaceae;g__Erythrobacter;s__
+495_37	Cytophagales;f__Cyclobacteriaceae;g__Reichenbachiella;s__
+495_57	Sphingomonadales;f__Sphingomonadaceae;g__Parasphingorhabdus;s__
+499_34_sub	Flavobacteriales;f__Flavobacteriaceae;g__Winogradskyella;s__Winogradskyella arenosi
+500_36	Rhodobacterales;f__Rhodobacteraceae;g__Planktotalea;s__
+500_70	Rhodobacterales;f__Rhodobacteraceae;g__Shimia;s__Shimia thalassica
+503_60	Pseudomonadales;f__Alcanivoracaceae;g__Alcanivorax;s__
+511_50	Verrucomicrobiales;f__Akkermansiaceae;g__Haloferula;s__
+512_39	Parvibaculales;f__Parvibaculaceae;g__Parvibaculum;s__Parvibaculum sp913057645
+512_maxbin.010	Enterobacterales_A;f__Alteromonadaceae;g__Aliiglaciecola;s__
+514_50	Sphingomonadales;f__Sphingomonadaceae;g__Parasphingorhabdus;s__
+528_116	Rhodobacterales;f__Rhodobacteraceae;g__JL08;s__
+529_48	Pseudomonadales;f__Natronospirillaceae;g__Saccharospirillum;s__
+540_52	Pseudomonadales;f__Halomonadaceae;g__Cobetia;s__Cobetia amphilecti
+558_60	Rhodobacterales;f__Rhodobacteraceae;g__Pseudophaeobacter;s__Pseudophaeobacter sp905479575
+563_42	Pseudomonadales;f__Halieaceae;g__Halioglobus;s__
+563_maxbin.014	Rhizobiales;f__Kaistiaceae;g__Bauldia;s__Bauldia litoralis
+573_103	UBA6615;f__UBA6615;g__UBA8079;s__
+573_22	Rhodospirillales_A;f__Casp-alpha2;g__UBA1479;s__UBA1479 sp002325375
+573_94	Flavobacteriales;f__Flavobacteriaceae;g__Nonlabens;s__Nonlabens ulvanivorans
+74_49	Sphingomonadales;f__Sphingomonadaceae;g__Erythrobacter;s__
+76_115	Flavobacteriales;f__Flavobacteriaceae;g__Gillisia;s__
+76_24	Rhizobiales;f__JACESI01;g__JACESI01;s__
+76_43	Caulobacterales;f__Maricaulaceae;g__;s__
+76_74	Pseudomonadales;f__Halieaceae;g__Halioglobus;s__
+80_12	Pseudomonadales;f__Halieaceae;g__;s__
+80_83	Sphingomonadales;f__Sphingomonadaceae;g__Erythrobacter;s__
+84_45	Sphingomonadales;f__Sphingomonadaceae;g__Erythrobacter;s__
+91_29	Rhodobacterales;f__Rhodobacteraceae;g__JABSSA01;s__
+97_22	Sphingomonadales;f__Sphingomonadaceae;g__Parasphingorhabdus;s__
+98_31	Rhodobacterales;f__Rhodobacteraceae;g__Litoreibacter;s__
+99_17	Rhizobiales;f__Stappiaceae;g__Roseibium;s__
+9_64	Caulobacterales;f__Hyphomonadaceae;g__Hyphomonas;s__Hyphomonas sp002414505
+9_maxbin.011	Rhodobacterales;f__Rhodobacteraceae;g__Sulfitobacter;s__Sulfitobacter pontiacus
