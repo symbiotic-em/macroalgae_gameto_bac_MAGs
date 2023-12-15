@@ -1,0 +1,958 @@
+This is for after preprocessing:
+###########################################################################
+Make contigs using "megahit.sh"
+###########################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071/gameto_bac" # edit to your directory
+cat >$SCR_DIR/megahit_ctrl.sh<<"EOF"
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=200G
+#SBATCH --time 12:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J megahit
+#SBATCH -e megahit%j.err #will output error log
+#SBATCH -o megahit%o.out #can also output error stuff
+
+# Activate the Conda environment and run megahit
+eval "$(conda shell.bash hook)"
+conda activate megahit_env
+
+id=$1 
+
+megahit -1 /project/julias21_1071/Error_corrected_all/${id}/corrected/${id}_cleana1.fq.00.0_0.cor.fastq.gz
+ -2 /project/julias21_1071/Error_corrected_all/${id}/corrected/${id}_cleana2.fq.00.0_0.cor.fastq.gz--min-contig-len 1000 -m 0.85 -o 02_ASSEMBLY/ -t 8 -o /project/julias21_1071/mezo_rest/${id}
+
+EOF #do not forget!
+
+for id in `cat $SCR_DIR/heat_all.txt` #name of samples, their actual IDs
+do
+    sbatch $SCR_DIR/megahit_ctrl.sh $id
+done
+##############################################################################
+#rename the files to have the same prefix as their sample IDs
+while read -r id; do
+    # Extract the first part of the ID
+    prefix="${id%%_*}"
+    src_dir="$SCR_DIR/${id}"
+        if [ -d "$src_dir" ]; then
+        cd "$src_dir" || exit
+        for file in *.fa; do
+            new_name="${prefix}_${file}"
+            mv "$file" "$new_name"
+        done
+        cd - || exit
+    else
+        echo "Directory $src_dir does not exist."
+    fi
+done < "$SCR_DIR/heat_all.txt" #
+
+#rename the contigs to have the same prefix as the sample IDs 
+while read -r id; do
+    # Extract the first part of the ID
+    prefix="${id%%_*}"
+    src_dir="$SCR_DIR/${id}"
+
+    if [ -d "$src_dir" ]; then
+        cd "$src_dir" || exit
+
+        for file in *.fa; do
+            # Add a prefix to each contig in the file
+            sed -i "s/^>/>$prefix\_/" "$file"
+        done
+
+        cd - || exit
+    else
+        echo "Directory $src_dir does not exist."
+    fi
+done < "$SCR_DIR/heat_all.txt" 
+############################################################
+Bin the contigs using MaxBin2 
+#first make .sam files 
+###############################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071" # edit
+cat >$SCR_DIR/gameto_bac/bbmap_no_nested.sh <<"EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --time=02:00:00
+#SBATCH -p epyc-64
+#SBATCH -J bbmapCo
+#SBATCH -e bbmapCo%j.err
+#SBATCH --mem=16G
+
+module purge
+module load gcc/11.3.0
+module load openjdk/11.0.15_10
+
+id="$1"
+SCR_DIR="/project/julias21_1071/"
+
+echo "Processing ID: $id"
+
+bbwrap.sh ref="$SCR_DIR/gameto_bac/$id/${id%%_*}_final.contigs.fa" path="$SCR_DIR/gameto_bac/$id" \
+    in="$SCR_DIR/Error_corrected_all/$id/corrected/${id}_cleana1.fq.00.0_0.cor.fastq.gz" \
+    in2="$SCR_DIR/Error_corrected_all/$id/corrected/${id}_cleana2.fq.00.0_0.cor.fastq.gz" \
+    out="$SCR_DIR/gameto_bac/$id/{id%%_*}_aln.sam.gz" \
+    kfilter=22 subfilter=15 maxindel=80
+
+echo "Finished processing ID: $id"
+
+EOF
+for id in `cat $SCR_DIR/gameto_bac/heat_all.txt` #name of samples, their actual IDs, repeat with "heat_all.txt"
+do
+    sbatch $SCR_DIR/gameto_bac/bbmap_no_nested.sh $id
+done
+
+##################################################################################
+#then generate coverage to determine whether coverage was good 
+##################################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071" # edit
+cat >$SCR_DIR/gameto_bac/pileups.sh<<"EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time 02:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J pileup_control
+#SBATCH -e pileup_control%j.err
+#SBATCH -o pileup_control%j.out
+
+module purge
+module load gcc/11.3.0
+module load openjdk/11.0.15_10
+
+id=$1 
+SCR_DIR="/project/julias21_1071"
+pileup.sh in=$SCR_DIR/gameto_bac/${id}/{id%%_*}_aln.sam.gz out=$SCR_DIR/gameto_bac/${id}/cov.txt
+
+EOF
+
+for id in `cat $SCR_DIR/gameto_bac/heat_all.txt`
+do
+    sbatch $SCR_DIR/gameto_bac/pileups.sh $id
+done
+
+########################################################################
+#Go to where the .err files for the pileup.sh output
+find . -name "pileup*.err" -exec cat {} + > heat_all_concatenated_covstats.txt
+#all the sample stats in one .txt for that run, makes it easy to determine which samples get to stay or go
+########################################################################
+
+#then remove all .out files and all .sam files because they take up too much space
+
+rm -r *.out
+find /project/julias21_1071/gameto_bac -type f -name "*.sam.gz" -exec rm {} \;
+
+#########################################################################
+#Look through the stats and kick out any bad samples:
+# 78_V300059128_L3_MACdxqRAABA-665 and Lane 4 (technical rep) too
+# 75_V300059128_L3_MACdxqRAAAY-662 and Lane 4 (technical rep) too
+#########################################################################
+#assemble contigs using Maxbin 
+########################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071" # edit
+cat >$SCR_DIR/gameto_bac/maxbin_og.sh<<"EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time 02:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J maxbin_mezo
+#SBATCH -o maxbin%mezo_og.out
+#SBATCH -e maxbin%mezo_og.error
+#SBATCH --mem=16G
+
+module purge
+eval "$(conda shell.bash hook)"
+mamba init
+mamba activate maxbin2_env2
+
+id=$1 
+SCR_DIR="/project/julias21_1071"
+run_MaxBin.pl -thread 8 -contig $SCR_DIR/gameto_bac/${id}/${id%%_*}_final.contigs.fa -out $SCR_DIR/gameto_bac/${id}/maxbin -abund $SCR_DIR/gameto_bac/${id}/cov.txt
+
+EOF
+for id in `cat $SCR_DIR/gameto_bac/heat_all.txt`
+do
+    sbatch $SCR_DIR/gameto_bac/maxbin_og.sh $id
+done
+####################################################################################
+###################### Assemble contigs with CONCOCT ###############################
+#-Create a bowtie and samtools environment to use with steps requiring bowtie and samtools
+#-Create a standalone Concoct environment to use only with concoct
+####################################################################
+#First, the following scripts will create a sorted indexed bam alignment for each set of contigs:
+#Script bowtie_build.sh builds the bowtie index
+#Script bowtiesam.sh creates the .sam files
+#Script bt_samtobam.sh creates a .bam out of .sam and removes the .sam files from the directory
+#Script bt_sortbam.sh sorts the bam and removes .bam file that takes up memory
+#Script bt_indexbam indexes the sorted bam
+
+#bowtie_build.sh
+################################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071/gameto_bac"
+cat > "$SCR_DIR/bowtie_build_nonest.sh" << "EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time=02:00:00
+#SBATCH -p epyc-64
+#SBATCH -J bowtie_build
+#SBATCH -o bowtiebuild.out
+#SBATCH -e bowtiebuild.error
+#SBATCH --mem=8G
+
+# Activate the Conda environment and run 
+eval "$(conda shell.bash hook)"
+conda activate bow_sam
+id="$1"
+SCR_DIR="/project/julias21_1071/gameto_bac"
+bowtie2-build "$SCR_DIR/${id}/${id%%_*}_final.contigs.fa" "$SCR_DIR/${id}/final_contigs"
+EOF
+
+while IFS= read -r id; do
+    sbatch "$SCR_DIR/bowtie_build_nonest.sh" "$id"
+done < "$SCR_DIR/heat_all.txt"
+#########################################################
+now bowtiesam.sh
+#######################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071"
+cat > "$SCR_DIR/gameto_bac/bowtiesam_nonest.sh" << "EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time=02:00:00
+#SBATCH -p epyc-64
+#SBATCH -J bowtie_sam
+#SBATCH -o bowtie_sam%j.out
+#SBATCH -e bowtie_sam%o.error
+#SBATCH --mem=8G
+
+
+# Activate the Conda environment and run 
+eval "$(conda shell.bash hook)"
+conda activate bow_sam
+id="$1"
+SCR_DIR="/project/julias21_1071"
+bowtie2 --threads 8 -x "$SCR_DIR/gameto_bac/${id}/final_contigs" -1 "$SCR_DIR/Error_corrected_all/$id/corrected/${id}_cleana1.fq.00.0_0.cor.fastq.gz" -2 "$SCR_DIR/Error_corrected_all/$id/corrected/${id}_cleana2.fq.00.0_0.cor.fastq.gz" -S "$SCR_DIR/gameto_bac/${id}/bowaln.sam"
+EOF
+
+while IFS= read -r id; do
+    sbatch "$SCR_DIR/gameto_bac/bowtiesam_nonest.sh" "$id"
+done < "$SCR_DIR/gameto_bac/heat_all.txt"
+###########################################################
+samtobam.sh
+#########################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071/gameto_bac"
+cat > "$SCR_DIR/sam_tobam.sh" << "EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time=02:00:00
+#SBATCH -p epyc-64
+#SBATCH -J samtobam
+#SBATCH --mem=8G
+
+# Activate the Conda environment and run 
+eval "$(conda shell.bash hook)"
+conda activate bow_sam
+
+id="$1"
+SCR_DIR="/project/julias21_1071/gameto_bac"
+samtools view -@ 8 -bS "$SCR_DIR/${id}/bowaln.sam" > "$SCR_DIR/${id}/bowaln.bam"
+
+EOF
+
+while IFS= read -r id; do
+    echo "Submitting job for $id"
+    sbatch "$SCR_DIR/sam_tobam.sh" "$id"
+    sleep 1  # Add a short delay to avoid potential race conditions
+done < "$SCR_DIR/heat_all.txt"
+################################################################
+#remove .out files and .sam
+rm -r *.out
+find /project/julias21_1071/gameto_bac -type f -name "*.sam" -exec rm {} \;
+################################################################
+#sort the bam
+################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071/gameto_bac"
+cat > "$SCR_DIR/bt_sortbam.sh" << "EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time=02:00:00
+#SBATCH -p epyc-64
+#SBATCH -J sortbam
+#SBATCH --mem=8G
+
+# Activate the Conda environment and run 
+eval "$(conda shell.bash hook)"
+conda activate bow_sam
+
+id="$1"
+SCR_DIR="/project/julias21_1071/gameto_bac"
+samtools sort "$SCR_DIR/${id}/bowaln.bam"  -@ 8 -o "$SCR_DIR/${id}/bowaln.sorted.bam"
+
+
+EOF
+
+while IFS= read -r id; do
+    sbatch "$SCR_DIR/bt_sortbam.sh" "$id"
+done < "$SCR_DIR/heat_all.txt"
+###########################################################
+#remove the bowaln bam because it takes up a lot of space
+###########################################################
+
+find /project/julias21_1071/gameto_bac -type f -name "bowaln.bam" -exec rm {} \;
+
+###########################################################
+#now let's move on to making the index for the sorted bowaln.bam
+############################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071/gameto_bac"
+cat > "$SCR_DIR/bt_indexbam.sh" << "EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time=02:00:00
+#SBATCH -p epyc-64
+#SBATCH -J indexbam
+#SBATCH --mem=8G
+
+# Activate the Conda environment and run 
+eval "$(conda shell.bash hook)"
+conda activate bow_sam
+
+id="$1"
+SCR_DIR="/project/julias21_1071/gameto_bac"
+samtools index -b -@ 8 "$SCR_DIR/${id}/bowaln.sorted.bam" 
+
+EOF
+
+while IFS= read -r id; do
+    sbatch "$SCR_DIR/bt_indexbam.sh" "$id"
+done < "$SCR_DIR/heat_all.txt"
+#############################################################
+#index this sorted bam --> results in a sorted.bam.bai file
+#############################################################
+# break up the contigs before Concoct. Make the final_contigs.fa into a .bed and then into .fa 
+###########################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071" # edit
+cat >$SCR_DIR/gameto_bac/concoct_nonest.sh<<"EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time 12:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J concoct
+#SBATCH -e concoct%j.err
+#SBATCH -o concoct%j.out
+
+module purge
+eval "$(conda shell.bash hook)"
+conda activate concoct_env
+
+id=$1 
+SCR_DIR="/project/julias21_1071"
+
+cut_up_fasta.py $SCR_DIR/gameto_bac/${id}/${id%%_*}_final.contigs.fa -c 10000 -o 0 --merge_last -b $SCR_DIR/gameto_bac/${id}/contigs_10K.bed > $SCR_DIR/gameto_bac/${id}/contigs_10K.fa 
+EOF
+for id in `cat $SCR_DIR/gameto_bac/heat_all.txt`
+do
+    sbatch $SCR_DIR/gameto_bac/concoct_nonest.sh $id
+done
+#######################################################
+#create coverage tables
+#######################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071" # edit
+cat >$SCR_DIR/gameto_bac/concoct_coverage_nonest.sh<<"EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time 12:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J co1
+#SBATCH -e co1%j.err
+#SBATCH -o co1%j.out
+
+module purge
+eval "$(conda shell.bash hook)"
+conda activate concoct_env
+
+id=$1 
+SCR_DIR="/project/julias21_1071"
+
+concoct_coverage_table.py $SCR_DIR/gameto_bac/${id}/contigs_10K.bed $SCR_DIR/gameto_bac/${id}/bowaln.sorted.bam > $SCR_DIR/gameto_bac/${id}/coverage_table.tsv
+EOF
+
+for id in `cat $SCR_DIR/gameto_bac/heat_all.txt`
+do
+    sbatch $SCR_DIR/gameto_bac/concoct_coverage_nonest.sh $id
+done
+###############################################################
+#now will have to create Concoct environment (1.0.0) with Python 3.6 and pandas 0.19.2 because a newer version just didn't work for me
+
+#!/bin/bash
+
+SCR_DIR="/project/julias21_1071" # Edit this with your project directory path
+
+# Define the Concoct job script
+cat > "$SCR_DIR/gameto_bac/concoct2.sh" <<EOF
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --cpus-per-task=8
+#SBATCH --time=12:00:00
+#SBATCH -p epyc-64
+#SBATCH -J co2
+#SBATCH -e co2%j.err
+#SBATCH -o co2%j.out
+
+#module purge
+#eval "\$(conda shell.bash hook)"
+#conda activate concoct_new
+
+id="\$1"
+SCR_DIR="/project/julias21_1071"
+
+#concoct --composition_file "\$SCR_DIR/gameto_bac/\$id/contigs_10K.fa" -t 8 --coverage_file "\$SCR_DIR/gameto_bac/\$id/coverage_table.tsv" -b "\$SCR_DIR/gameto_bac/\$id/concoct_output"
+
+
+#here have to use the new concoct 1.1.0 here
+module purge
+eval "\$(conda shell.bash hook)"
+conda activate concoct_newER
+
+merge_cutup_clustering.py "\$SCR_DIR/gameto_bac/\$id/concoct_output/clustering_gt1000.csv" > "\$SCR_DIR/gameto_bac/\$id/concoct_output/clustering_merged.csv"
+
+output_dir="\$SCR_DIR/gameto_bac/\$id/concoct_output/fasta_bins"
+mkdir -p "\$output_dir"
+
+extract_fasta_bins.py "\$SCR_DIR/gameto_bac/\${id}/\${id%%_*}_final.contigs.fa"  "\$SCR_DIR/gameto_bac/\$id/concoct_output/clustering_merged.csv" --output_path "\$output_dir"
+EOF
+
+# Loop through the IDs and submit Concoct jobs
+while read -r id; do
+    sbatch "$SCR_DIR/gameto_bac/concoct2.sh" "$id" || echo "Job submission for ID \$id failed." >> error_log.txt
+done < "$SCR_DIR/gameto_bac/heat_all.txt"
+############################################################################################################
+#prep the data with Fasta_to_Contig2Bin.sh
+#!/usr/bin/env bash 
+
+function display_help() {
+    echo " "
+    echo "Fasta_to_Scaffolds2Bin: Converts genome bins in fasta format to scaffolds-to-bin table."
+    echo " (DAS Tool helper script)"
+    echo " "
+    echo "Usage: Fasta_to_Scaffolds2Bin.sh -e fasta > my_scaffolds2bin.tsv"
+    echo " "
+    echo "   -e, --extension            Extension of fasta files. (default: fasta)"
+    echo "   -i, --input_folder         Folder with bins in fasta format. (default: ./)"
+    echo "   -h, --help                 Show this message."
+    echo " "
+    echo " "
+    exit 1
+}
+
+# [ $# -eq 0 ] && { display_help ; exit 1; }
+
+extension="fasta"
+folder="."
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -e | --extension )      shift
+                                extension=$1
+                                ;;
+        -i | --input_folder )   shift
+                                folder=$1
+                                ;;
+        -h | --help )           display_help
+                                exit
+                                ;;
+        * )                     display_help
+                                exit 1
+    esac
+    shift
+done
+
+for i in $folder\/*.$extension
+do
+binname=$(echo $(basename $i) | sed "s/\\.$extension//g")
+grep ">" $i | perl -pe "s/\n/\t$binname\n/g" | perl -pe "s/>//g" 
+done
+
+
+###############################################################################
+#then run this script w the appropriate files. First concoct then comment out concoct and do maxbin separately
+#########################################################################
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=8
+#SBATCH --time 08:00:00 
+#SBATCH -p epyc-64
+
+
+#id=$1
+#SCR_DIR="/project/julias21_1071"
+#for id in `cat $SCR_DIR/gameto_bac/heat2.txt`
+#do
+# ./Fasta_to_Contig2Bin.sh -i $SCR_DIR/gameto_bac/${id}/concoct_output/fasta_bins -e fa > $SCR_DIR/gameto_bac/${id}/concoct.contigs2bin.tsv
+#done
+
+
+
+id=$1
+SCR_DIR="/project/julias21_1071"
+for id in `cat $SCR_DIR/gameto_bac/heat2.txt`
+do
+ ./Fasta_to_Contig2Bin.sh -i $SCR_DIR/gameto_bac/${id}/maxbinners -e fasta > $SCR_DIR/gameto_bac/${id}/maxbin.contigs2bin.tsv
+done
+############################################################################################################
+#first do concoct, comment out for the maxbin then make the maxbinners directory and move maxbin fasta to it using script below. After that return to above script ^^^ to 
+#run the maxbin stuff but make sure to comment out the concoct 
+#################################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071/gameto_bac"
+ID_FILE="heat_all.txt"
+# Iterate through each ID in the file
+while IFS= read -r id; do
+    # Construct the full path to the subdirectory
+    subdir="$SCR_DIR/$id"
+    maxbinners_dir="$subdir/maxbinners"
+
+    # Check if the subdirectory exists
+    if [ -d "$subdir" ]; then
+        # Create the "maxbinners" subdirectory if it doesn't exist
+        mkdir -p "$maxbinners_dir"
+
+        # Move all ".fasta" files to the "maxbinners" directory
+        mv "$subdir"/*.fasta "$maxbinners_dir/"
+    fi
+done < "$ID_FILE"
+
+#####################################################################################
+#looks like maxbin assembled few .fa files and concoct was a bit more successful. Maxbin didn't assemble .fa for some samples :|
+#######################################################################################
+#now DasTool, get a consensus of the best bins
+#################################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071" # edit
+cat >$SCR_DIR/gameto_bac/DASTool_nonest.sh<<"EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --cpus-per-task=8
+#SBATCH --time 12:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J co2
+#SBATCH -e co2%j.err
+#SBATCH -o co2%j.out
+module purge
+eval "$(conda shell.bash hook)"
+conda activate dastool_env
+id=$1 
+SCR_DIR="/project/julias21_1071"
+DAS_Tool -i /project/julias21_1071/gameto_bac/${id}/concoct.contigs2bin.tsv,/project/julias21_1071/gameto_bac/${id}/maxbin.contigs2bin.tsv -l concoct,maxbin -c $SCR_DIR/gameto_bac/${id}/${id%%_*}_final.contigs.fa -o /project/julias21_1071/gameto_bac/${id}/DASToolRun1 -t 8 --write_bin_evals --write_bins
+EOF
+for id in `cat $SCR_DIR/gameto_bac/heat_all.txt`
+do
+    sbatch $SCR_DIR/gameto_bac/DASTool_nonest.sh $id
+done
+##################################################################################
+#rename *.fa files in DASTool bins before running them through checkM
+#################################################################################
+#!/bin/bash
+#SBATCH -p epyc-64
+
+SCR_DIR="/project/julias21_1071/gameto_bac"
+while read -r id; do
+    # Extract the first part of the ID
+    prefix="${id%%_*}"
+    src_dir="$SCR_DIR/${id}/DASToolRun1_DASTool_bins"
+        if [ -d "$src_dir" ]; then
+        cd "$src_dir" || exit
+        for file in *.fa; do
+            new_name="${prefix}_${file}"
+            mv "$file" "$new_name"
+        done
+        cd - || exit
+    else
+        echo "Directory $src_dir does not exist."
+    fi
+done < "$SCR_DIR/heat_all.txt"
+######################################################################################
+#now can do checkM
+######################################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071" # edit
+cat >$SCR_DIR/gameto_bac/checkm2_nonest.sh<<"EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=50G 
+#SBATCH --time 04:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J checkM2
+#SBATCH -e checkM2%j.err
+#SBATCH -o checkM2%j.out
+
+module purge
+eval "$(conda shell.bash hook)"
+conda activate checkm2
+
+id=$1 
+SCR_DIR="/project/julias21_1071"
+
+
+checkm2 predict --threads 30 -x fa --input $SCR_DIR/gameto_bac/${id}/DASToolRun1_DASTool_bins --output-directory $SCR_DIR/gameto_bac/${id}/checkM2
+EOF
+
+for id in `cat $SCR_DIR/gameto_bac/heat_all.txt`
+do
+    sbatch $SCR_DIR/gameto_bac/checkm2_nonest.sh $id
+done
+
+##################################################################################################################
+#now take the output from the CheckM2 stuff and filter it to be >90% complete and <10% contamination.
+#set it in its own directory "filtered fasta" and continue below 
+##################################################################################################################
+#!/bin/bash
+#SBATCH -p epyc-64
+
+SCR_DIR="/project/julias21_1071"  # Edit this to your project directory
+samples_file="$SCR_DIR/gameto_bac/heat_all.txt"  # Path to the file containing sample IDs
+
+# Check if the samples file exists
+if [ ! -f "$samples_file" ]; then
+    echo "Error: Samples file not found: $samples_file"
+    exit 1
+fi
+
+# Function to check if a bin meets the filtering criteria
+function meets_criteria() {
+    local report_file="$1"
+    local bin_id="$2"
+    local min_completeness=90  # Edit this with your desired completeness threshold
+    local max_contamination=10   # Edit this with your desired contamination threshold
+
+    # Get the completeness and contamination values from the report file
+    local completeness=$(awk -v bin="$bin_id" '$1 == bin {print $2}' "$report_file")
+    local contamination=$(awk -v bin="$bin_id" '$1 == bin {print $3}' "$report_file")
+
+    # Check if the bin meets the criteria
+    if (( $(echo "$completeness >= $min_completeness" | bc -l) )) && (( $(echo "$contamination <= $max_contamination" | bc -l) )); then
+        return 0  # Bin meets the criteria
+    else
+        return 1  # Bin does not meet the criteria
+    fi
+}
+
+# Loop through each sample ID in the file and process it
+while read -r sample_id; do
+    fasta_dir="$SCR_DIR/gameto_bac/$sample_id/DASToolRun1_DASTool_bins"
+    report_dir="$SCR_DIR/gameto_bac/$sample_id/checkM2"
+
+    # Check if the directory exists and contains FASTA files
+    if [ -d "$fasta_dir" ] && [ "$(ls -A "$fasta_dir"/*.fa 2>/dev/null)" ]; then
+        report_file="$report_dir/quality_report.tsv"
+
+        # Check if the report file exists
+        if [ -f "$report_file" ]; then
+            # Create the filtered_fasta directory for this sample
+            filtered_dir="$fasta_dir/filtered_fasta"
+            mkdir -p "$filtered_dir"
+
+            # Loop through all bins in the FASTA directory
+            for bin_file in "$fasta_dir"/*.fa; do
+                if [ -f "$bin_file" ]; then
+                    bin_id=$(basename "$bin_file" .fa)
+                    echo "Processing sample ID: $sample_id, Bin ID: $bin_id"
+
+                    # Check if the bin meets the criteria
+                    if meets_criteria "$report_file" "$bin_id"; then
+                        cp "$bin_file" "$filtered_dir/"
+                    fi
+                fi
+            done
+        else
+            echo "Warning: Report file not found for sample ID: $sample_id"
+        fi
+    else
+        echo "Warning: FASTA directory not found or empty for sample ID: $sample_id"
+    fi
+done < "$samples_file"
+###############################################################################################################
+#now do tax assignments with GTDB-Tk 
+#Then use the classify_wf command to complete this workflow (according to the gtdbtk page):
+#“The classify workflow consists of four steps: ani_screen, identify, align, and classify.
+#The ani_screen step compares user genomes against a Mash database composed of all GTDB representative genomes, then verify the best mash hits using FastANI. User genomes classified with FastANI are not run through the rest of the pipeline (identify, align, classify) and are reported in the summary file.
+#The identify step calls genes using Prodigal, and uses HMM models and the HMMER package to identify the 120 bacterial and 53 archaeal marker genes used for phylogenetic inference (Parks et al., 2018). Multiple sequence alignments (MSA) are obtained by aligning marker genes to their respective HMM model.
+#The align step concatenates the aligned marker genes and filters the concatenated MSA to approximately 5,000 amino acids.
+#Finally, the classify step uses pplacer to find the maximum-likelihood placement of each genome in the GTDB-Tk reference tree. GTDB-Tk classifies each genome based on its placement in the reference tree, its relative evolutionary divergence, and/or average nucleotide identity (ANI) to reference genomes.”
+#Use script → classify_gtdbtk.sh
+#now classify_wf
+##############################################################################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071" # edit
+cat >$SCR_DIR/gameto_bac/gtdbtk_havesomeclass.sh<<"EOF"
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=64
+#SBATCH --mem=158GB
+#SBATCH --time 8:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J gtdbtk_class
+#SBATCH -e gtdbtk_class%j.err
+#SBATCH -o gtdbtk_class%j.out
+
+module purge
+eval "$(conda shell.bash hook)"
+conda activate gtdbtk
+
+id=$1 
+SCR_DIR="/project/julias21_1071"
+
+gtdbtk classify_wf --genome_dir $SCR_DIR/gameto_bac/${id}/DASToolRun1_DASTool_bins/filtered_fasta --out_dir $SCR_DIR/gameto_bac/${id}/DASToolRun1_DASTool_bins/filtered_fasta/gtdbtk/classify --skip_ani_screen -x fa --cpus 64
+EOF
+for id in `cat $SCR_DIR/gameto_bac/heat_all.txt`
+do
+    sbatch $SCR_DIR/gameto_bac/gtdbtk_havesomeclass.sh $id
+done
+#####################################################################################################################################
+#to make a giant phylogeny of all the MAGS, place them all in one directory 
+#####################################################################################################################################
+#!/bin/bash
+SCR_DIR="/project/julias21_1071"
+dest_dir="$SCR_DIR/gameto_bac/ALL_filt_MAGs"
+# Create the destination directory if it doesn't exist
+mkdir -p "$dest_dir"
+while read -r id; do
+    src_dir="$SCR_DIR/gameto_bac/${id}/DASToolRun1_DASTool_bins/filtered_fasta"
+    
+    if [ -d "$src_dir" ]; then
+        cp "$src_dir"/* "$dest_dir/"
+    else
+        echo "Directory $src_dir does not exist."
+    fi
+done < "$SCR_DIR/gameto_bac/heat_all.txt"
+#############################################################################
+#now generate a checkM report to input into drep to drep then phylogeny
+#Make phylogeny of dereplicated taxa and visualize using iTOL
+#Prune down to 1 representative of each strain, and painted on ubiquity / biomass distribution score. You can use dRep to do this instead of pruning by hand. dRep can be installed as a conda package- read the docs for info about that. 
+#***NOTE: if you are making a phylogeny from MAGS assembled from the same sample, you won’t need to use dRep because you won’t have 2 bins that are the same strain. Use dRep if you are combining MAGS binned separately where you might have the same strain represented as MAGS from different binnings.
+#dRep requires checkM but the conda formula can't install it correctly:https://github.com/MrOlm/drep/issues/33
+#############################################################################
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=64
+#SBATCH --mem=158GB
+#SBATCH --time 18:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J checkM_MAGs
+#SBATCH -e checkM_MAGs%j.err
+#SBATCH -o checkM_MAGs%j.out
+
+module purge
+eval "$(conda shell.bash hook)"
+conda activate checkm_env
+
+mkdir /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins
+
+checkm lineage_wf -t 64 -x fa /project/julias21_1071/gameto_bac/ALL_filt_MAGS /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins
+
+checkm qa /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins/lineage.ms /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins/ >> /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins/checkM_report.tsv
+
+################################################################################
+If you follow the notes in https://github.com/MrOlm/drep/issues/33 then you will generate a .csv with genome information referred to below as checkM_report.csv 
+################################################################################
+#Example: 
+genome,completeness,contamination
+Enterococcus_casseliflavus_EC20.fasta,98.28,0.0
+
+#Copy the info in the checkM_report.tsv
+#Open an excel sheet on your local laptop and paste all the information. Highlight the first column and under “Data”, click “Text to Columns”, rename “Completeness” and “Contamination” to “completeness” and “contamination”. Delete all data that is not part of these columns. Save as “checkM_report.csv”. Transfer back to your remote directory. 
+###################################################################################
+#now remove those MAGs with <90% completeness and >10% contamination according to this checkM check
+
+awk '/^[[:space:]]+[0-9]+_[0-9]+/ {print $1 "\t" $13 "\t" $14}' /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/checkM_report.tsv >> /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/checkM_report.csv
+
+#now dRep
+#####################################################################################
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=64
+#SBATCH --mem=158GB
+#SBATCH --time 12:00:00
+#SBATCH -p epyc-64
+#SBATCH -J deRep
+#SBATCH -e deRep%j.err
+#SBATCH -o deRep%j.out
+
+module purge
+eval "$(conda shell.bash hook)"
+conda activate drep_env
+dRep dereplicate /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins/deReps --genomeInfo /project/julias21_1071/gameto_bac/ALL_filt_MAGS_checkM_report.csv -g /project/julias21_1071/gameto_bac/ALL_filt_MAGS/*.fa  --ignoreGenomeQuality 
+
+####################################################################################### 
+#went from 1,794 genomes to 148 which means the dataset was reduced to 8.24 % of its OG size
+#so now let's make the tree and visualize
+#BUT FIRST classify_wf 
+############################################################################################ 
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=64
+#SBATCH --mem=158GB
+#SBATCH --time 8:00:00 
+#SBATCH -p epyc-64
+#SBATCH -J gtdbtk_class_filtered
+#SBATCH -e gtdbtk_class_filtered%j.err
+#SBATCH -o gtdbtk_class_filtered%j.out
+module purge
+eval "$(conda shell.bash hook)"
+conda activate gtdbtk
+
+gtdbtk classify_wf --genome_dir /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins/deReps/dereplicated_genomes --out_dir /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins/bins/deReps/dereplicated_genomes/classify_wf --skip_ani_screen -x fa --cpus 64
+################################################################################################
+#take the user.fasta 
+#and create the tree but unzip the fastq.gz
+
+gunzip gtdbtk.bac120.user_msa.fasta.gz
+##########################################################################################
+Create the phylogeny with FastTree
+##########################################################################################
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=20G 
+#SBATCH --time 10:00:00 
+#SBATCH -p epyc-64
+
+module purge
+eval "$(conda shell.bash hook)"
+conda activate fast_tree_env
+
+FastTree /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins/deReps/dereplicated_genomes/classify_wf/align/gtdbtk.bac120.user_msa.fasta > FINAL_ALL_align_gametobacMAGs.tree
+
+################################################################################################
+Visualize it with iTOL, label it with the the GTDB-Tk taxonomy and call it a day. Move on to functional analysis but first, some file prep
+################################################################################################
+#Now let's concatenate all the 148 dereplicated files together. But first, we need to change the contig names to include the gametophyte sample ID (which they already have) AND
+#the bin ID. So create a list with all your dereplicated MAG names
+
+ls *.fa > MAG_list.txt
+
+#Now rename the contigs
+###########################################
+#!/bin/bash
+
+while IFS= read -r id; do
+    if [ -f "$id" ]; then
+        echo "Processing file: $id"
+
+        # Add a prefix to each contig in the file
+        sed -i "s/^>/>$id\_/" "$id"
+        echo "Processed file: $id"
+    else
+        echo "File $id does not exist."
+    fi
+done < "all_MAG_list.txt"
+#########################################
+#then concatenate all the files together and make them a .fna file 
+while read -r file; do cat "$file" >> all_MAGs_combined.fna; done < all_MAG_list.txt
+
+#make a backup copy 
+cp all_MAGs_combined.fna /your/directory/favorite
+
+#find out how many sequences are there
+grep -o ">" all_MAGs_combined.fna | wc -l
+#10548
+################################################################################################
+#now run PRODIGAL on meta mode, specifically designed for huge metagenomic sets
+################################################################################################
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=64
+#SBATCH --time 16:00:00
+#SBATCH -p epyc-64
+#SBATCH -J prodigal_meta
+#SBATCH -e prodigal_meta%j.err
+#SBATCH -o prodigal_meta%j.out
+
+# Activate the Conda environment and run Prodigal
+eval "$(conda shell.bash hook)"
+conda activate prodigal_env
+
+prodigal -i /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/deReps/dereplicated_genomes/fastas_for_coverM/all_MAGs_combined2.fna -o /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/deReps/dereplicated_genomes/fastas_for_coverM/all_MAGs_combined2_coords.gbk -a /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/deReps/dereplicated_genomes/fastas_for_coverM/all_MAGs_combined2_proteins.faa -p meta
+####################################################################################################
+Lastly annotate with METABOLIC on METABOLIC-G.pl mode for basic metabolic function
+####################################################################################################
+#!/bin/bash
+#SBATCH --account=julias21_1071
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=64
+#SBATCH --time 12:00:00
+#SBATCH --mem=158GB
+#SBATCH -p epyc-64
+#SBATCH -J metabolic
+#SBATCH -e metabolic%j.err
+#SBATCH -o metabolic%j.out
+
+# Activate the Conda environment and run eggNOG
+eval "$(conda shell.bash hook)"
+conda activate METABOLIC_v4.0
+
+perl /project/julias21_1071/software/metagenomes/METABOLIC_running_folder/METABOLIC/METABOLIC-G.pl -in /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/deReps/dereplicated_genomes/metagenome_together -o /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/deReps/dereplicated_genomes/metagenome_together/Metabolic
+
+##################################################################################################
