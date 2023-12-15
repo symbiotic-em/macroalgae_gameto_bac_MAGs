@@ -157,7 +157,7 @@ find /project/julias21_1071/gameto_bac -type f -name "*.sam.gz" -exec rm {} \;
 # 78_V300059128_L3_MACdxqRAABA-665 and Lane 4 (technical rep) too
 # 75_V300059128_L3_MACdxqRAAAY-662 and Lane 4 (technical rep) too
 #########################################################################
-#assemble contigs using Maxbin 
+# Bin contigs using Maxbin 
 ########################################################################
 #!/bin/bash
 SCR_DIR="/project/julias21_1071" # edit
@@ -189,7 +189,7 @@ do
     sbatch $SCR_DIR/gameto_bac/maxbin_og.sh $id
 done
 ####################################################################################
-###################### Assemble contigs with CONCOCT ###############################
+###################### Bin contigs with CONCOCT ###############################
 #-Create a bowtie and samtools environment to use with steps requiring bowtie and samtools
 #-Create a standalone Concoct environment to use only with concoct
 ####################################################################
