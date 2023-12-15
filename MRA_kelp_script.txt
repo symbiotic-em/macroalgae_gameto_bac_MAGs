@@ -839,7 +839,7 @@ conda activate drep_env
 dRep dereplicate /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins/deReps --genomeInfo /project/julias21_1071/gameto_bac/ALL_filt_MAGS_checkM_report.csv -g /project/julias21_1071/gameto_bac/ALL_filt_MAGS/*.fa  --ignoreGenomeQuality 
 
 ####################################################################################### 
-#went from 1,794 genomes to 148 which means the dataset was reduced to 8.24 % of its OG size
+#went from 1,794 genomes to 149 which means the dataset was reduced to 8.3 % of its OG size
 #so now let's make the tree and visualize
 #BUT FIRST classify_wf 
 ############################################################################################ 
@@ -885,7 +885,7 @@ FastTree /project/julias21_1071/gameto_bac/ALL_filt_MAGS/checkM/bins/deReps/dere
 ################################################################################################
 Visualize it with iTOL, label it with the the GTDB-Tk taxonomy and call it a day. Move on to functional analysis but first, some file prep
 ################################################################################################
-#Now let's concatenate all the 148 dereplicated files together. But first, we need to change the contig names to include the gametophyte sample ID (which they already have) AND
+#Now let's concatenate all the 149 dereplicated files together. But first, we need to change the contig names to include the gametophyte sample ID (which they already have) AND
 #the bin ID. So create a list with all your dereplicated MAG names
 
 ls *.fa > MAG_list.txt
