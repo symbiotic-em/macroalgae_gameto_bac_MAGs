@@ -1,6 +1,6 @@
 This is for after preprocessing:
 ###########################################################################
-Make contigs using "megahit.sh"
+Make assembly contigs with MEGAHIT using "megahit.sh"
 ###########################################################################
 #!/bin/bash
 SCR_DIR="/project/julias21_1071/gameto_bac" # edit to your directory
