@@ -6,7 +6,7 @@ The MAGs generated in this dataset can be downloaded at NCBI under accession cod
 
 # Files in this repository
 
-- MRA_kelp_script.txt  script used to generate the analysis described in the manuscript
+- MRA_kelp_script.txt  script used to generate the analysis described in the manuscript on the USC CARC HPC. 
 - METABOLIC_result.xlsx  METABOLIC functional analysis output
 - FINAL_ALL_align_gametobacMAGs.tree  FastTree .tree output
 - FINAL_ALL_tree_labels.txt  iTOL .txt file used to add GTDB-Tk taxonomy to the above .tree for visualization
