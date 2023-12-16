@@ -596,7 +596,7 @@ do
     sbatch $SCR_DIR/gameto_bac/DASTool_nonest.sh $id
 done
 ##################################################################################
-#rename *.fa files in DASTool bins before running them through checkM
+#rename *.fa files in DASTool bins before running them through checkM2
 #################################################################################
 #!/bin/bash
 #SBATCH -p epyc-64
@@ -618,7 +618,7 @@ while read -r id; do
     fi
 done < "$SCR_DIR/heat_all.txt"
 ######################################################################################
-#now can do checkM
+#now can do checkM2
 ######################################################################################
 #!/bin/bash
 SCR_DIR="/project/julias21_1071" # edit
@@ -777,7 +777,7 @@ while read -r id; do
     fi
 done < "$SCR_DIR/gameto_bac/heat_all.txt"
 #############################################################################
-#now generate a checkM report to input into drep to drep then phylogeny
+#now generate a checkM report to input into drep to drep then phylogeny if you havent done so BUT we did generate CheckM2 before, so can use that too ( either approach is acceptable)
 #Make phylogeny of dereplicated taxa and visualize using iTOL
 #Prune down to 1 representative of each strain, and painted on ubiquity / biomass distribution score. You can use dRep to do this instead of pruning by hand. dRep can be installed as a conda package- read the docs for info about that. 
 #***NOTE: if you are making a phylogeny from MAGS assembled from the same sample, you won’t need to use dRep because you won’t have 2 bins that are the same strain. Use dRep if you are combining MAGS binned separately where you might have the same strain represented as MAGS from different binnings.
@@ -819,7 +819,7 @@ Enterococcus_casseliflavus_EC20.fasta,98.28,0.0
 
 awk '/^[[:space:]]+[0-9]+_[0-9]+/ {print $1 "\t" $13 "\t" $14}' /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/checkM_report.tsv >> /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/checkM_report.csv
 
-#now dRep
+#now dRep with either CheckM2 or checkM report
 #####################################################################################
 #!/bin/bash
 #SBATCH --account=julias21_1071
