@@ -13,3 +13,4 @@ The MAGs generated in this dataset can be downloaded at NCBI under accession cod
 - FINAL_ALL_tree_labels.txt  iTOL .txt file used to append GTDB-Tk taxonomy to the above .tree for visualization
 - all_MAG_list.txt  list of 149 dereplicated genomes
 - dRep_figures  dRep output
+- Manu_Table1  Table 1 detailing MAG bin ID, accession identifiers,  genome assembly statistics and GTDB-Tk taxonomic classification.
