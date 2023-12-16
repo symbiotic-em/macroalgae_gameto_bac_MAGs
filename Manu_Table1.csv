@@ -1,0 +1,151 @@
+MAG,NCBI Accession,,GTDB-Tk Taxonomy (Classify_wf),,,,,,Genome Assembly Statistics (CheckM2),,,,,,,,Assembly,
+Bin_ID,BioProject,MAG SRA,Phylum,Class ,Order,Family,Genus,Species,Completeness,Contamination,Coding_Density,Contig_N50,Average_Gene_Length,Genome_Size,GC_Content,Total_Coding_Sequences,Method,Version
+113_16,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Dokdonia,NA,100,0.12,0.899,376952,344.8277202,5323477,0.34,4632,CONCOCT,1.0.0
+115_25,,,Bacteroidota,Rhodothermia,Rhodothermales,NA,NA,NA,97.92,2.57,0.9,224350,353.2230179,4599743,0.69,3910,CONCOCT,1.0.0
+115_42,,,Pseudomonadota,Alphaproteobacteria,Thalassobaculales,Thalassobaculaceae,Nisaea,NA,99.26,0.06,0.9,718601,319.6771861,4853003,0.59,4563,CONCOCT,1.0.0
+116_15,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Reichenbachiella,NA,99.01,0.19,0.918,672762,368.9336557,6225549,0.41,5170,CONCOCT,1.0.0
+116_18_sub,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Roseobacter,NA,100,0.09,0.886,190418,303.3662888,4880013,0.52,4764,CONCOCT,1.0.0
+116_20,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,JAMZMI01,NA,99.62,0.16,0.927,482465,375.5333014,5065288,0.43,4174,CONCOCT,1.0.0
+119_33,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Parasphingorhabdus,NA,99.99,7.2,0.923,901942,319.0301275,3573741,0.54,3452,CONCOCT,1.0.0
+119_87,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Oleiphilaceae,Marinobacter,Marinobacter sp913057975,100,0.04,0.912,159234,326.9612235,4455508,0.57,4152,CONCOCT,1.0.0
+119_89,,,Pseudomonadota,Gammaproteobacteria,Enterobacterales_A,Alteromonadaceae,Paraglaciecola,NA,99.82,0.51,0.884,300414,332.7003231,4186986,0.39,3714,CONCOCT,1.0.0
+12_70,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Cellulophaga,Cellulophaga sp002813425,98.86,0.42,0.918,40236,333.8356957,3769162,0.32,3457,CONCOCT,1.0.0
+120_31,,,Bacteroidota,Rhodothermia,Balneolales,Balneolaceae,Balneola,Balneola sp001650905,98.95,0,0.917,283115,345.7872475,3577347,0.38,3168,CONCOCT,1.0.0
+124_1,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Eudoraea,NA,100,0.05,0.904,678767,339.4004013,3926573,0.37,3489,CONCOCT,1.0.0
+127_50,,,Pseudomonadota,Alphaproteobacteria,Parvibaculales,CGMCC-115125,Pyruvatibacter,NA,100,0.28,0.911,1190321,317.5421192,3558258,0.58,3407,CONCOCT,1.0.0
+130_20,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,Lentilitoribacter,NA,99.94,0.01,0.907,654539,315.4713161,3705994,0.44,3556,CONCOCT,1.0.0
+134_58,,,Pseudomonadota,Alphaproteobacteria,Caulobacterales,Hyphomonadaceae,NA,NA,99.99,4.66,0.898,47351,301.8626813,4024464,0.55,3998,CONCOCT,1.0.0
+137_49,,,Pseudomonadota,Gammaproteobacteria,Enterobacterales_A,Alteromonadaceae,Paraglaciecola,NA,99.99,0.35,0.89,244417,334.0775309,4556596,0.4,4050,CONCOCT,1.0.0
+137_65,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Nonlabens,NA,99.98,0.01,0.906,218433,331.5245845,3166013,0.35,2888,CONCOCT,1.0.0
+137_maxbin.011,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Reichenbachiella,NA,99.68,0.01,0.911,349685,351.1238434,4864172,0.41,4215,MaxBin2,2.2.7
+139_49,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Muricauda,NA,99.8,0.12,0.915,235486,346.6483993,4182073,0.38,3686,CONCOCT,1.0.0
+139_83_sub,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Tateyamaria,NA,99.93,0.92,0.896,171476,295.1753401,4564673,0.57,4631,CONCOCT,1.0.0
+140_35,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Aurantibacter_A,NA,99.69,1.06,0.915,82341,354.561164,4510944,0.34,3883,CONCOCT,1.0.0
+140_8,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,Aurantimonas,Aurantimonas coralicida,95.03,2.32,0.877,8740,270.4292308,4203507,0.67,4550,CONCOCT,1.0.0
+144_2,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Sedimentitalea,NA,100,0.62,0.901,149882,309.4920751,5647225,0.58,5489,CONCOCT,1.0.0
+145_38,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Tateyamaria,NA,92.27,0,0.906,418618,305.9816585,3914120,0.56,3871,CONCOCT,1.0.0
+146_5,,,Pseudomonadota,Alphaproteobacteria,Caulobacterales,Maricaulaceae,Litorimonas,NA,97.99,2.48,0.907,11901,295.1289048,2715972,0.46,2785,CONCOCT,1.0.0
+157_1,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinomonadaceae,Marinomonas,NA,99.99,0,0.904,485880,329.303128,3386214,0.44,3101,CONCOCT,1.0.0
+159_43,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Parasphingorhabdus,NA,100,0.23,0.924,621654,320.9334756,2924689,0.54,2811,CONCOCT,1.0.0
+159_maxbin.009,,,Bacteroidota,Rhodothermia,Balneolales,Balneolaceae,Balneola,NA,98.43,1.88,0.922,812775,343.074982,3091137,0.37,2774,MaxBin2,2.2.7
+159_maxbin.012_sub,,,Pseudomonadota,Gammaproteobacteria,Enterobacterales_A,Vibrionaceae,Vibrio,Vibrio splendidus,100,0.73,0.859,401929,323.6831844,5564292,0.44,4924,MaxBin2,2.2.7
+168_16,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,JAMZMI01,NA,99.92,0.08,0.93,481210,371.5630077,5155095,0.43,4309,CONCOCT,1.0.0
+168_30,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,NA,NA,96.66,0.08,0.926,83278,344.8878314,4919085,0.42,4413,CONCOCT,1.0.0
+171_15,,,Bacteroidota,Rhodothermia,Balneolales,Balneolaceae,Balneola,NA,99.51,0.01,0.91,106941,336.5489422,3926416,0.37,3545,CONCOCT,1.0.0
+171_16,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,R2A130,NA,98.74,5.26,0.904,465993,325.0715517,4994468,0.53,4640,CONCOCT,1.0.0
+171_25,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,JABSSA01,NA,99.78,1.11,0.894,93952,296.8676717,4747054,0.53,4776,CONCOCT,1.0.0
+173_22,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Ekhidna,NA,93.72,0.22,0.935,321971,344.3742409,4356972,0.4,3952,CONCOCT,1.0.0
+173_25,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Ekhidna,NA,99.55,2.87,0.938,529316,349.2782269,4275602,0.39,3835,CONCOCT,1.0.0
+173_30,,,Bacteroidota,Bacteroidia,Flavobacteriales,Crocinitomicaceae,JABURP01,NA,99.41,0.51,0.932,497350,357.3399043,4075332,0.36,3551,CONCOCT,1.0.0
+173_68,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,ELB16-189,NA,100,1.57,0.925,249118,339.6608637,4865839,0.41,4423,CONCOCT,1.0.0
+173_87,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Fulvivirga,NA,99.9,0.14,0.929,430577,341.7461916,4268628,0.39,3873,CONCOCT,1.0.0
+174_50,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Roseobacter,NA,90.16,0.01,0.909,116289,310.1528802,3743833,0.58,3663,CONCOCT,1.0.0
+179_17_sub,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinomonadaceae,Marinomonas,NA,99.96,3.76,0.899,24281,307.7285276,3343365,0.42,3260,CONCOCT,1.0.0
+179_54,,,Pseudomonadota,Alphaproteobacteria,Caulobacterales,Hyphomonadaceae,Henriciella,NA,100,0.04,0.917,313534,319.2089552,3630910,0.55,3484,CONCOCT,1.0.0
+179_71,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Maribacter,Maribacter dokdonensis,99.99,0.07,0.921,2200173,358.2368138,4330269,0.36,3716,CONCOCT,1.0.0
+184_51,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Algoriphagus,NA,99.89,0.18,0.888,548294,341.5303332,4634114,0.42,4022,CONCOCT,1.0.0
+184_68,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Shimia,NA,100,0.39,0.904,250695,311.8877729,4732513,0.56,4580,CONCOCT,1.0.0
+19_16,,,Actinomycetota,Acidimicrobiia,Acidimicrobiales,Ilumatobacteraceae,Ilumatobacter_A,NA,99.94,0.46,0.916,277395,328.6446001,4758314,0.68,4426,CONCOCT,1.0.0
+199_15,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Reichenbachiella,NA,97.97,0.5,0.922,676413,359.9783305,4750866,0.39,4061,CONCOCT,1.0.0
+199_30,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Stappiaceae,Roseibium,NA,100,0.24,0.888,717739,327.7312536,5707114,0.62,5161,CONCOCT,1.0.0
+199_75,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Maribacter,NA,98.21,0.86,0.912,22809,333.201661,4217562,0.35,3853,CONCOCT,1.0.0
+20_77,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Alteripontixanthobacter,NA,100,0.01,0.907,2780721,323.8142965,2825256,0.62,2644,CONCOCT,1.0.0
+204_109,,,Pseudomonadota,Gammaproteobacteria,Enterobacterales_A,Kangiellaceae,GCA-002733465,NA,100,0.75,0.885,514998,345.5660467,4907247,0.41,4194,CONCOCT,1.0.0
+204_45,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Maribacter,NA,93.52,2.57,0.915,11307,315.7272494,4032549,0.35,3901,CONCOCT,1.0.0
+204_85,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Polaribacter,NA,99.66,4.32,0.915,584126,344.2492462,3364626,0.29,2985,CONCOCT,1.0.0
+220_62,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Maribacter,Maribacter litoralis,98.27,1.18,0.914,28225,335.1826686,4463799,0.36,4062,CONCOCT,1.0.0
+223_maxbin.016_sub,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Stappiaceae,Roseibium,NA,92.43,9.97,0.883,774296,282.9439399,5493534,0.53,5726,MaxBin2,2.2.7
+234_29,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Sulfitobacter,NA,92.56,2.34,0.903,216339,306.8960618,4082054,0.56,4012,CONCOCT,1.0.0
+252_28,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Stappiaceae,Roseibium,Roseibium album,99.99,0.27,0.89,484938,323.2670223,6934755,0.56,6374,CONCOCT,1.0.0
+252_50,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Ekhidna,NA,98.76,0.17,0.935,1270499,352.693012,4687723,0.41,4150,CONCOCT,1.0.0
+287_101,,,Pseudomonadota,Gammaproteobacteria,Enterobacterales_A,Alteromonadaceae,Paraglaciecola,NA,100,0.17,0.885,282486,342.8257932,5673647,0.41,4885,CONCOCT,1.0.0
+287_25,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Halieaceae,NA,NA,99.98,0.42,0.927,313624,340.6116255,4278106,0.55,3888,CONCOCT,1.0.0
+29_31_sub,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,JACESI01,JACESI01,NA,98.55,1.12,0.911,29685,320.3753165,3329466,0.48,3160,CONCOCT,1.0.0
+294_68,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Pseudophaeobacter,Pseudophaeobacter sp001457775,99.96,0,0.883,316540,312.2295635,4393132,0.58,4147,CONCOCT,1.0.0
+302_24,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Tateyamaria,Tateyamaria sp900143535,99.92,0.03,0.893,319197,302.2077338,4506750,0.57,4448,CONCOCT,1.0.0
+31_9,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Halieaceae,Halioglobus,NA,99.99,0.24,0.924,430857,345.1845597,4639321,0.54,4145,CONCOCT,1.0.0
+330_100,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Aliishimia,NA,100,2.02,0.896,230578,312.3309123,5888177,0.54,5645,CONCOCT,1.0.0
+330_38,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Parasphingorhabdus,NA,99.98,0.61,0.916,1982427,313.3154662,3669895,0.5,3582,CONCOCT,1.0.0
+330_8,,,Verrucomicrobiota,Verrucomicrobiae,Verrucomicrobiales,Akkermansiaceae,Luteolibacter,NA,96.93,0.07,0.915,229828,350.6284404,4005315,0.58,3488,CONCOCT,1.0.0
+330_97_sub,,,Pseudomonadota,Alphaproteobacteria,Caulobacterales,Maricaulaceae,Maricaulis,NA,100,0.24,0.903,93477,316.8731874,3695913,0.65,3517,CONCOCT,1.0.0
+36_14,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Stappiaceae,Roseibium,Roseibium polysiphoniae,98.7,3.85,0.891,46743,304.5811998,5478840,0.58,5351,CONCOCT,1.0.0
+36_87,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,JABDJX01,NA,99.98,0.21,0.918,872259,303.7869497,3778553,0.55,3816,CONCOCT,1.0.0
+37_44,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Oleiphilaceae,Marinobacter,NA,100,0.21,0.909,179819,325.081117,4833478,0.57,4512,CONCOCT,1.0.0
+371_14,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Oleiphilaceae,Marinobacter,NA,99.99,0.11,0.918,414956,335.6630569,3541140,0.55,3232,CONCOCT,1.0.0
+371_43,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Pseudophaeobacter,Pseudophaeobacter sp900313025,100,0.97,0.876,343303,308.9176371,4990116,0.57,4723,CONCOCT,1.0.0
+374_11,,,Pseudomonadota,Alphaproteobacteria,Sneathiellales,Sneathiellaceae,Sneathiella,NA,99.69,0.1,0.915,874168,311.2073171,4677491,0.5,4592,CONCOCT,1.0.0
+374_45,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Algibacter_B,NA,99.96,0.02,0.901,196064,360.4337349,3880172,0.33,3237,CONCOCT,1.0.0
+374_94,,,Pseudomonadota,Alphaproteobacteria,Caulobacterales,Maricaulaceae,Litorimonas,NA,99.4,0.21,0.907,719031,315.5791948,3545229,0.5,3403,CONCOCT,1.0.0
+374_maxbin.003,,,Pseudomonadota,Alphaproteobacteria,Caulobacterales,Maricaulaceae,Hellea,NA,98.11,0.14,0.92,908774,343.0624137,4043417,0.49,3621,MaxBin2,2.2.7
+38_81,,,Planctomycetota,Planctomycetia,Pirellulales,Pirellulaceae,Rhodopirellula,Rhodopirellula bahusiensis,99.97,4.33,0.889,100231,365.2792393,7757351,0.56,6310,CONCOCT,1.0.0
+39_51,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Porticoccaceae,Porticoccus,Porticoccus sp002341315,99.1,0.82,0.908,128623,314.0866792,2759588,0.53,2665,CONCOCT,1.0.0
+395_29,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Ascidiaceihabitans,NA,99.83,2.43,0.913,461721,305.5191399,4239783,0.55,4232,CONCOCT,1.0.0
+40_108,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Aestuariivirgaceae,Anderseniella,NA,99.96,0.26,0.903,790303,312.9489751,4759858,0.56,4586,CONCOCT,1.0.0
+41_25,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Alcanivoracaceae,Alcanivorax,Alcanivorax venustensis,100,0.01,0.913,865725,333.7109809,3547819,0.65,3242,CONCOCT,1.0.0
+41_6,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,JABSSA01,NA,99.98,0.19,0.899,543717,304.0178922,4639308,0.53,4583,CONCOCT,1.0.0
+41_94_sub,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Sulfitobacter,Sulfitobacter dubius,99.28,0.82,0.903,47405,298.0959546,4007749,0.6,4054,CONCOCT,1.0.0
+411_50,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Stappiaceae,NA,NA,100,1.5,0.883,738347,311.1463536,6338949,0.53,6006,CONCOCT,1.0.0
+421_15,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Erythrobacter,Erythrobacter sp900149685,100,0.6,0.919,694913,326.6022689,3188469,0.56,2997,CONCOCT,1.0.0
+421_19,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,HXMU1428-3,HXMU1428-3,HXMU1428-3 sp021604645,99.41,0.87,0.848,196169,321.1609533,3475905,0.42,3063,CONCOCT,1.0.0
+421_65_sub,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,Hoeflea,NA,95.96,0.04,0.888,27006,300.860033,4913533,0.6,4844,CONCOCT,1.0.0
+421_maxbin.001,,,Planctomycetota,Planctomycetia,Planctomycetales,Planctomycetaceae,Fuerstiella,NA,100,1.22,0.842,126609,366.4622261,7435510,0.51,5705,MaxBin2,2.2.7
+422_8,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,GCA-2746425,GCA-2746425,NA,100,0.29,0.907,479781,317.3427705,4143402,0.5,3956,CONCOCT,1.0.0
+422_maxbin.014,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Gilvibacter,NA,98.32,1.5,0.931,791391,337.0306974,3248997,0.4,2997,MaxBin2,2.2.7
+424_12,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Litoreibacter,NA,98.45,1.4,0.913,452273,303.267573,3439589,0.56,3457,CONCOCT,1.0.0
+424_88,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,Lentilitoribacter,Lentilitoribacter sp020628775,99.8,0.57,0.91,357289,317.079561,3807517,0.45,3645,CONCOCT,1.0.0
+424_maxbin.012,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,Nitratireductor_D,NA,99.99,1.86,0.902,569370,313.9837398,4490024,0.66,4305,MaxBin2,2.2.7
+427_31,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Maribacter_C,NA,100,0.05,0.914,878033,342.3690272,4581310,0.39,4081,CONCOCT,1.0.0
+427_5,,,Pseudomonadota,Alphaproteobacteria,Parvibaculales,Parvibaculaceae,Parvibaculum,NA,100,0.19,0.896,534835,316.9717707,3715109,0.61,3507,CONCOCT,1.0.0
+427_63,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Oleiphilaceae,Marinobacter,Marinobacter alexandrii,99.77,0.04,0.915,709553,335.8518223,4132669,0.58,3759,CONCOCT,1.0.0
+427_84,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinomonadaceae,Marinomonas,NA,99.92,0.59,0.895,46249,311.8694118,3552024,0.42,3400,CONCOCT,1.0.0
+43_20_sub,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,JACESI01,JACESI01,NA,100,2.89,0.908,97530,323.8783873,3234063,0.48,3026,CONCOCT,1.0.0
+43_54,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Yoonia,Yoonia sp025141675,91.71,0.01,0.925,466687,311.2,3576330,0.55,3550,CONCOCT,1.0.0
+43_maxbin.008,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Qipengyuania,Qipengyuania citrea,100,1.13,0.912,2665686,313.9890886,3213773,0.64,3116,MaxBin2,2.2.7
+444_62,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,Lentilitoribacter,NA,99.99,4.85,0.911,530159,314.707969,4144995,0.45,4003,CONCOCT,1.0.0
+448_36,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Pseudoruegeria,NA,100,3.61,0.896,194313,302.6692107,5034224,0.52,4979,CONCOCT,1.0.0
+450_131,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Sulfitobacter,NA,97.82,0.33,0.914,525932,314.7436496,3531273,0.57,3425,CONCOCT,1.0.0
+459_34,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Sulfitobacter,Sulfitobacter sp001634775,99.98,1.86,0.909,230739,309.7546111,3817309,0.61,3741,CONCOCT,1.0.0
+462_24,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Pseudophaeobacter,NA,96.71,0.04,0.886,24638,297.5181072,4167555,0.59,4142,CONCOCT,1.0.0
+463_53,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Stappiaceae,Roseibium,NA,100,2.15,0.892,493270,317.2876338,5070996,0.53,4763,CONCOCT,1.0.0
+47_54,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,R2A130,NA,93.23,0.27,0.907,384987,330.2895225,4707797,0.55,4314,CONCOCT,1.0.0
+47_62,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Sulfitobacter,NA,99.97,2.96,0.757,141818,265.7121038,6395851,0.53,6089,CONCOCT,1.0.0
+472_47_sub,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Halieaceae,Halioglobus,NA,99.85,1.76,0.922,45738,331.1782772,4307499,0.53,4005,CONCOCT,1.0.0
+479_102,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,NA,NA,92.63,0.55,0.929,19626,323.8284498,4167881,0.42,3993,CONCOCT,1.0.0
+479_113,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Erythrobacter,NA,99.99,0.01,0.916,454898,314.8363964,2855776,0.55,2775,CONCOCT,1.0.0
+48_65,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Erythrobacter,NA,99.99,0.04,0.92,1642923,320.4104189,2963501,0.56,2841,CONCOCT,1.0.0
+481_35,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Erythrobacter,NA,100,0.01,0.925,787009,321.2091311,2824642,0.54,2716,CONCOCT,1.0.0
+481_46,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Algibacter,NA,99.99,0.13,0.88,256754,350.6834497,4794825,0.32,4012,CONCOCT,1.0.0
+486_111,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Ekhidna,NA,100,3.15,0.928,3251870,351.6015661,4928080,0.38,4342,CONCOCT,1.0.0
+495_37,,,Bacteroidota,Bacteroidia,Cytophagales,Cyclobacteriaceae,Reichenbachiella,NA,97.63,0.29,0.925,258781,364.3099718,5016352,0.4,4252,CONCOCT,1.0.0
+495_57,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Parasphingorhabdus,NA,100,0.22,0.923,1182580,319.9557875,3382150,0.54,3257,CONCOCT,1.0.0
+499_34_sub,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella arenosi,99.9,0.38,0.897,449052,344.7365385,3595336,0.36,3120,CONCOCT,1.0.0
+500_36,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Planktotalea,NA,90.4,1.86,0.918,11300,283.7801307,4108470,0.54,4439,CONCOCT,1.0.0
+500_70,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Shimia,Shimia thalassica,100,0.04,0.911,457507,324.9316072,4372268,0.56,4094,CONCOCT,1.0.0
+503_60,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Alcanivoracaceae,Alcanivorax,NA,99.99,0.06,0.885,130585,322.212379,3717772,0.58,3409,CONCOCT,1.0.0
+511_50,,,Verrucomicrobiota,Verrucomicrobiae,Verrucomicrobiales,Akkermansiaceae,Haloferula,NA,97.78,0.04,0.917,1233604,376.5576483,4830947,0.58,3929,CONCOCT,1.0.0
+512_39,,,Pseudomonadota,Alphaproteobacteria,Parvibaculales,Parvibaculaceae,Parvibaculum,Parvibaculum sp913057645,99.91,0.01,0.898,870004,314.6765648,3607797,0.64,3435,CONCOCT,1.0.0
+512_maxbin.010,,,Pseudomonadota,Gammaproteobacteria,Enterobacterales_A,Alteromonadaceae,Aliiglaciecola,NA,100,0.07,0.882,156915,337.5979021,4922488,0.41,4290,MaxBin2,2.2.7
+514_50,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Parasphingorhabdus,NA,99.99,0.06,0.922,559186,321.1251553,3358423,0.51,3220,CONCOCT,1.0.0
+528_116,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,JL08,NA,100,2.06,0.894,254034,303.9503532,5042536,0.54,4955,CONCOCT,1.0.0
+529_48,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Natronospirillaceae,Saccharospirillum,NA,99.83,0.8,0.885,329474,331.549119,4649149,0.56,4143,CONCOCT,1.0.0
+540_52,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Halomonadaceae,Cobetia,Cobetia amphilecti,100,0.45,0.85,53480,339.5705418,4242454,0.62,3544,CONCOCT,1.0.0
+558_60,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Pseudophaeobacter,Pseudophaeobacter sp905479575,100,0.06,0.884,179829,310.6365624,4810805,0.59,4573,CONCOCT,1.0.0
+563_42,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Halieaceae,Halioglobus,NA,100,0.27,0.923,2088235,342.3782738,3733241,0.53,3360,CONCOCT,1.0.0
+563_maxbin.014,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Kaistiaceae,Bauldia,Bauldia litoralis,100,0,0.9,283371,312.6878673,4959297,0.66,4764,MaxBin2,2.2.7
+573_103,,,Pseudomonadota,Alphaproteobacteria,UBA6615,UBA6615,UBA8079,NA,98.81,0.6,0.92,796031,325.6535322,3766395,0.63,3553,CONCOCT,1.0.0
+573_22,,,Pseudomonadota,Alphaproteobacteria,Rhodospirillales_A,Casp-alpha2,UBA1479,UBA1479 sp002325375,99.7,0.96,0.91,699483,323.8468348,3976822,0.63,3728,CONCOCT,1.0.0
+573_94,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Nonlabens,Nonlabens ulvanivorans,99.99,0.02,0.928,467598,341.5263709,3158280,0.35,2863,CONCOCT,1.0.0
+74_49,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Erythrobacter,NA,99.99,0.07,0.924,1407654,320.2063612,2742346,0.56,2641,CONCOCT,1.0.0
+76_115,,,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Gillisia,NA,100,0,0.892,319317,325.2479339,3570486,0.4,3267,CONCOCT,1.0.0
+76_24,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,JACESI01,JACESI01,NA,100,0,0.903,380890,324.4228548,2608785,0.47,2424,CONCOCT,1.0.0
+76_43,,,Pseudomonadota,Alphaproteobacteria,Caulobacterales,Maricaulaceae,NA,NA,99.96,0.08,0.906,192330,324.3937475,2709340,0.47,2527,CONCOCT,1.0.0
+76_74,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Halieaceae,Halioglobus,NA,100,0.19,0.92,915168,341.1367292,3727146,0.53,3357,CONCOCT,1.0.0
+80_12,,,Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Halieaceae,NA,NA,98.6,0.42,0.933,608141,344.0700309,4290008,0.58,3884,CONCOCT,1.0.0
+80_83,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Erythrobacter,NA,100,7.17,0.922,1409634,322.9430764,3278931,0.56,3127,CONCOCT,1.0.0
+84_45,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Erythrobacter,NA,99.91,1.36,0.913,599446,321.0939365,3350310,0.55,3183,CONCOCT,1.0.0
+9_64,,,Pseudomonadota,Alphaproteobacteria,Caulobacterales,Hyphomonadaceae,Hyphomonas,Hyphomonas sp002414505,100,0.92,0.91,191403,312.9863014,4133358,0.6,4015,CONCOCT,1.0.0
+9_maxbin.011,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Sulfitobacter,Sulfitobacter pontiacus,100,2.39,0.911,682320,308.1944677,3625364,0.6,3579,MaxBin2,2.2.7
+91_29,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,JABSSA01,NA,97.65,0.16,0.897,207075,303.3562614,5005406,0.53,4943,CONCOCT,1.0.0
+97_22,,,Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Parasphingorhabdus,NA,100,0.09,0.917,1985136,314.5489968,3532811,0.53,3439,CONCOCT,1.0.0
+98_31,,,Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Litoreibacter,NA,100,8.65,0.873,40588,277.8007181,5303013,0.52,5570,CONCOCT,1.0.0
+99_17,,,Pseudomonadota,Alphaproteobacteria,Rhizobiales,Stappiaceae,Roseibium,NA,100,0.02,0.888,214650,305.356582,4460116,0.57,4330,CONCOCT,1.0.0
