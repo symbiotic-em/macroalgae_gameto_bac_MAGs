@@ -953,6 +953,6 @@ Lastly annotate with METABOLIC on METABOLIC-G.pl mode for basic metabolic functi
 eval "$(conda shell.bash hook)"
 conda activate METABOLIC_v4.0
 
-perl /project/julias21_1071/software/metagenomes/METABOLIC_running_folder/METABOLIC/METABOLIC-G.pl -in /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/deReps/dereplicated_genomes/metagenome_together -o /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/deReps/dereplicated_genomes/metagenome_together/Metabolic
+perl /project/julias21_1071/software/metagenomes/METABOLIC_running_folder/METABOLIC/METABOLIC-G.pl -in /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/deReps/dereplicated_genomes/fastas_for_coverM/METABOLIC_2ndtime_charm -o /project/julias21_1071/gameto_bac/ALL_filt_MAGs/checkM/bins/deReps/dereplicated_genomes/metagenome_together/Metabolic
 
 ##################################################################################################
